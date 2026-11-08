@@ -5,6 +5,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import com.seattlesolvers.solverslib.hardware.RevIMU;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
+import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 
@@ -15,11 +16,14 @@ import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 public class robot {
     public Telemetry telemetry;
     public MecanumDrive drive;
-    public Motor intakeMotor;
+    public MotorEx intakeMotor;
+    public MotorEx kickerMotor;
+    public MotorEx shooterMotor;
 
-    public Motor kickerMotor;
+
     public ServoEx rampServoLeft;
     public ServoEx rampServoRight;
+
 
 
 
@@ -31,8 +35,9 @@ public class robot {
     public robot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
 
-        intakeMotor = new Motor(hardwareMap, "intake");
-        kickerMotor = new Motor(hardwareMap, "kicker");
+        shooterMotor = new MotorEx(hardwareMap,"shooter");
+        intakeMotor = new MotorEx(hardwareMap, "intake");
+        kickerMotor = new MotorEx(hardwareMap, "kicker");
         rampServoLeft = new ServoEx(hardwareMap, "rampLeft");
         rampServoRight = new ServoEx(hardwareMap,"rampRight");
 

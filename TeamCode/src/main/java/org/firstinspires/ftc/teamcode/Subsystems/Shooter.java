@@ -8,14 +8,18 @@ import org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
+import com.seattlesolvers.solverslib.hardware.motors.Motor;
+
+import org.firstinspires.ftc.teamcode.robot;
 
 public class Shooter extends SubsystemBase {
+    robot robot;
+    public Shooter(robot robot) {
+        this.robot = robot;
+    }
     public Shooter() {}
 
-    private DcMotorEx shooter_Motor = null;
-    private DcMotorEx kicker = null;
-    private String shooter = "shooter";
-    private String kicker_name = "kicker";
+
 
     public static final Shooter INSTANCE = new Shooter();
 
@@ -53,21 +57,21 @@ public class Shooter extends SubsystemBase {
     public void setRPM() {
         double TARGET_VEL = RPM * TICKS_PER_REV * VEL_SCALE / 60;
         pidc.setSetpoint(TARGET_VEL);
-        double feedback = pidc.calculate(shooter_Motor.getVelocity());
+        double feedback = pidc.calculate(robot.shooterMotor.getVelocity());
         double feedfw = ff.calculate(TARGET_VEL);
-        shooter_Motor.setPower(pidc.clamp(feedfw+feedback,-1.,1.));
+        robot.shooterMotor.setVelocity(pidc.clamp(feedfw+feedback,-1.,1.));
 
     }
 
     public void init(HardwareMap hMap){
-        shooter_Motor = hMap.get(DcMotorEx.class,shooter);
-        shooter_Motor.setDirection(DcMotorSimple.Direction.FORWARD);
-        shooter_Motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shooter_Motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        kicker = hMap.get(DcMotorEx.class,kicker_name);
-        kicker.setDirection(DcMotorSimple.Direction.FORWARD);
-        kicker.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        kicker.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        robot.shooterMotor.setInverted(false);
+        robot.shooterMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        robot.shooterMotor.setRunMode(Motor.RunMode.RawPower);
+
+        robot.kickerMotor.setInverted(false);
+        robot.kickerMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        robot.kickerMotor.setRunMode(Motor.RunMode.RawPower);
         setPID();
         setFF();
         stop();
@@ -75,8 +79,8 @@ public class Shooter extends SubsystemBase {
 
     public double[] getVels() {
         double[] vals = {0.,0.,0.,0.};
-        vals[0] = shooter_Motor.getVelocity();
-        vals[2] = shooter_Motor.getCurrent(CurrentUnit.AMPS);
+        vals[0] = robot.shooterMotor.getVelocity();
+        vals[2] = robot.shooterMotor.getCurrent(CurrentUnit.AMPS);
         return vals;
     }
 
@@ -84,7 +88,7 @@ public class Shooter extends SubsystemBase {
         double[] vals = {0.,0.,0.,0.};
         double TARGET_VEL = RPM * TICKS_PER_REV * VEL_SCALE / 60;
         pidc.setSetpoint(TARGET_VEL);
-        vals[0] = pidc.calculate(shooter_Motor.getVelocity());
+        vals[0] = pidc.calculate(robot.shooterMotor.getVelocity());
         vals[1] = ff.calculate(TARGET_VEL);
         vals[2] = vals[0]+vals[1];
         vals[3] = TARGET_VEL;
@@ -96,7 +100,7 @@ public class Shooter extends SubsystemBase {
         setRPM();
     }
     public void run() {
-        double pow = shooter_Motor.getPower();
+        double pow = robot.shooterMotor.getVelocity();
 
     }
 
@@ -106,14 +110,14 @@ public class Shooter extends SubsystemBase {
     }
 
     public void shooterOff() {
-        shooter_Motor.setPower(0);
+        robot.shooterMotor.setVelocity(0);
 
     }
     public void kickeron() {
-        kicker.setPower(1.);
+        robot.kickerMotor.setVelocity(1.);
     }
 
     public void kickeroff() {
-        kicker.setPower(0);
+        robot.kickerMotor.setVelocity(0);
     }
 }
