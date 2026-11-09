@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 public class IntakeOut extends CommandBase {
     Intake intake;
 
-    public IntakeOut(Intake i){
-        intake = i;
+    public IntakeOut(){
+
         addRequirements(intake);
 
     }

@@ -4,21 +4,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.util.Range;
+import com.seattlesolvers.solverslib.command.SubsystemBase;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot;
 
-/*
- * Positive X is forward
- * Positive Y is strafe left
- * Positive Yaw is counter-clockwise
-   double frontLeftPower    =  x - y - yaw;
-   double frontRightPower   =  x + y + yaw;
-   double backLeftPower     =  x + y - yaw;
-   double backRightPower    =  x - y + yaw;
-*/
 
-public class Drive {
+
+public class Drive extends SubsystemBase {
+    robot robot;
+    public Drive(robot robot) {
+        this.robot = robot;
+    }
+
 
     public static final Drive INSTANCE = new Drive();
 
@@ -26,7 +24,6 @@ public class Drive {
 
     private AutoDrive autoDrive;
     private Telemetry telemetry;
-
     private DcMotorEx left_front = null;
     private DcMotorEx right_front = null;
     private DcMotorEx left_back = null;
@@ -36,6 +33,8 @@ public class Drive {
     private String lb_name = "left_back";
     private String rf_name = "right_front";
     private String rb_name = "right_back";
+
+
 
     public double fwdSpeed;
 
@@ -91,5 +90,7 @@ public class Drive {
         left_back.setPower(backLeftPower);
         right_back.setPower(backRightPower);
     }
+
+
 
 }

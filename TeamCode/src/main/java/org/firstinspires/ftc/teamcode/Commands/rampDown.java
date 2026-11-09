@@ -8,8 +8,8 @@ public class rampDown extends CommandBase {
 
     Intake intake;
 
-    public rampDown(Intake i) {
-        intake = i;
+    public rampDown() {
+
         addRequirements(intake);
     }
 

@@ -8,8 +8,8 @@ public class rampPollen extends CommandBase {
 
     Intake intake;
 
-    public rampPollen(Intake i) {
-        intake = i;
+    public rampPollen() {
+
         addRequirements(intake);
     }
 

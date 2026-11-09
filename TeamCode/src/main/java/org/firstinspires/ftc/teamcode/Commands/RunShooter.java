@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 public class RunShooter extends CommandBase {
     Shooter shooter;
 
-    public RunShooter(Shooter s){
-        shooter = s;
+    public RunShooter(){
+
         addRequirements(shooter);
     }
 

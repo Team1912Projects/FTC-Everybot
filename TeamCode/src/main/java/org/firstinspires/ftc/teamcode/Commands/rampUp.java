@@ -8,8 +8,8 @@ public class rampUp extends CommandBase {
 
     Intake intake;
 
-    public rampUp(Intake i) {
-        intake = i;
+    public rampUp() {
+
         addRequirements(intake);
     }
 

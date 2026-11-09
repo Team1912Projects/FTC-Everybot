@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Subsystems.DriveFieldCentric;
+
 
 import com.seattlesolvers.solverslib.hardware.RevIMU;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
@@ -23,13 +25,18 @@ public class robot {
 
     public ServoEx rampServoLeft;
     public ServoEx rampServoRight;
+    public DriveFieldCentric driv;
 
 
 
 
 
 
-    public RevIMU imu;
+
+
+
+
+
 
 
     public robot(HardwareMap hardwareMap, Telemetry telemetry) {
@@ -44,15 +51,16 @@ public class robot {
 
 
         Motor fl, fr, bl, br;
-        fl = new Motor(hardwareMap, "frontLeft");
-        fr = new Motor(hardwareMap, "frontRight");
-        bl = new Motor(hardwareMap, "backLeft");
-        br = new Motor(hardwareMap, "backRight");
+        fl = new MotorEx(hardwareMap, "frontLeft");
+        fr = new MotorEx(hardwareMap, "frontRight");
+        bl = new MotorEx(hardwareMap, "backLeft");
+        br = new MotorEx(hardwareMap, "backRight");
 
         //drive = new DifferentialDrive(fl, fr, bl, br);
         drive = new MecanumDrive(fl, fr, bl, br);
 
         RevIMU imu = new RevIMU(hardwareMap);
+        driv = new DriveFieldCentric(hardwareMap);
         imu.init();
     }
 
