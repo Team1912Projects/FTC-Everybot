@@ -88,7 +88,6 @@ public class Teleop extends OpMode{
 
         //GAMEPAD BINDINGS
         driverOp.getGamepadButton(GamepadKeys.Button.X)
-                .and(driverOp.getGamepadButton(GamepadKeys.Button.Y).negate())
                 .whenActive(new IntakeIn());
 
         driverOp.getGamepadButton(GamepadKeys.Button.Y)
