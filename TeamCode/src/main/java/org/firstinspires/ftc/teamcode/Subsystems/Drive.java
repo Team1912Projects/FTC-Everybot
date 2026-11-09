@@ -29,10 +29,10 @@ public class Drive extends SubsystemBase {
     private DcMotorEx left_back = null;
     private DcMotorEx right_back = null;
 
-    private String lf_name = "left_front";
-    private String lb_name = "left_back";
-    private String rf_name = "right_front";
-    private String rb_name = "right_back";
+    private String lf_name = "frontLeft";
+    private String lb_name = "backLeft";
+    private String rf_name = "frontRight";
+    private String rb_name = "BackRight";
 
 
 
