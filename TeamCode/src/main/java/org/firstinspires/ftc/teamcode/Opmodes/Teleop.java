@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.Opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.seattlesolvers.solverslib.command.Commands;
 import com.seattlesolvers.solverslib.command.button.Button;
 import com.seattlesolvers.solverslib.command.button.GamepadButton;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
+import com.seattlesolvers.solverslib.command.CommandScheduler;
 
 import org.firstinspires.ftc.teamcode.Commands.rampDown;
 import org.firstinspires.ftc.teamcode.Commands.rampUp;
@@ -30,6 +32,7 @@ public class Teleop extends OpMode{
 
 
 
+
     @Override
     public void init() {
         driverOp = new GamepadEx(gamepad1);
@@ -50,6 +53,30 @@ public class Teleop extends OpMode{
         Odometry.INSTANCE.teleinit();
         telemetry.addData(">", "Initialization complete.");
         telemetry.update();
+
+        //GAMEPAD BINDINGS
+        driverOp.getGamepadButton(GamepadKeys.Button.X)
+                .whenActive(new IntakeIn());
+
+        driverOp.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new rampDown());
+
+
+
+        driverOp.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(new rampPollen());
+
+        driverOp.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(new rampUp());
+
+        driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenActive(new RunShooter());
+
+        double drive = -squareInput(driverOp.getLeftY());
+        double strafe = -squareInput(driverOp.getLeftX());
+        double turn = -squareInput(driverOp.getRightX());
+        Drive.INSTANCE.moveRobot(drive, strafe, turn);
+        telemetry.addData("Drive: ","powers: %5.2f / %5.2f / %5.2f",drive,strafe,turn);
 
     }
 
@@ -75,6 +102,9 @@ public class Teleop extends OpMode{
     @Override
     public void loop() {
         Shooter.INSTANCE.run();
+        CommandScheduler.getInstance().run();
+        PinPoint.INSTANCE.getPose();
+       //telemetry.addLine(String.format("pose  %6.1f %6.1f %6.1f", ))
 
         if (teleopTimer.seconds() >= 80. & teleopTimer.seconds() <= 90.) {
             if (! endGameWarning) {
@@ -85,8 +115,24 @@ public class Teleop extends OpMode{
                 gamepad1.rumble(250);
             }
         }
+        if (driverOp.getButton(GamepadKeys.Button.Y)) {
+            telemetry.addLine("Ramp: down");
 
-        //GAMEPAD BINDINGS
+        } else if (driverOp.getButton(GamepadKeys.Button.B)) {
+            telemetry.addLine("Ramp: pollen");
+
+        } else if (driverOp.getButton(GamepadKeys.Button.A)) {
+            telemetry.addLine("Ramp up");
+
+        }else {
+            telemetry.addLine("Ramp: up");
+        }
+
+
+
+
+
+        /*GAMEPAD BINDINGS
         driverOp.getGamepadButton(GamepadKeys.Button.X)
                 .whenActive(new IntakeIn());
 
@@ -102,13 +148,13 @@ public class Teleop extends OpMode{
                         .whenPressed(new rampUp());
 
         driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenActive(new RunShooter());
+                .whenActive(new IntakeIn());
 
         double drive = -squareInput(driverOp.getLeftY());
         double strafe = -squareInput(driverOp.getLeftX());
         double turn = -squareInput(driverOp.getRightX());
         Drive.INSTANCE.moveRobot(drive, strafe, turn);
-        telemetry.addData("Drive: ","powers: %5.2f / %5.2f / %5.2f",drive,strafe,turn);
+        telemetry.addData("Drive: ","powers: %5.2f / %5.2f / %5.2f",drive,strafe,turn); */
 
 
 
