@@ -22,7 +22,6 @@ import org.firstinspires.ftc.teamcode.Commands.RunShooter;
 
 
 @TeleOp
-
 public class Teleop extends OpMode{
 
     final private ElapsedTime teleopTimer = new ElapsedTime();

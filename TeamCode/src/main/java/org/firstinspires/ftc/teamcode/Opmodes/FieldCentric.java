@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.Opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
@@ -8,6 +9,7 @@ import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveFieldCentric;
 import org.firstinspires.ftc.teamcode.robot;
 
+@TeleOp
 public class FieldCentric extends OpMode {
     private robot robot;
     private GamepadEx driverOp;
