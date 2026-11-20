@@ -1,25 +1,24 @@
-package org.firstinspires.ftc.teamcode.Opmodes;
+package org.firstinspires.ftc.teamcode.opmodes;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.seattlesolvers.solverslib.command.Commands;
 import com.seattlesolvers.solverslib.command.button.Button;
 import com.seattlesolvers.solverslib.command.button.GamepadButton;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
 
-import org.firstinspires.ftc.teamcode.Commands.rampDown;
-import org.firstinspires.ftc.teamcode.Commands.rampUp;
-import org.firstinspires.ftc.teamcode.Commands.rampPollen;
-import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.Subsystems.Drive;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-import org.firstinspires.ftc.teamcode.Subsystems.Odometry;
-import org.firstinspires.ftc.teamcode.Subsystems.PinPoint;
-import org.firstinspires.ftc.teamcode.Commands.IntakeIn;
-import org.firstinspires.ftc.teamcode.Commands.RunShooter;
-
+import org.firstinspires.ftc.teamcode.commands.rampDown;
+import org.firstinspires.ftc.teamcode.commands.rampUp;
+import org.firstinspires.ftc.teamcode.commands.rampPollen;
+import org.firstinspires.ftc.teamcode.subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.subsystems.Drive;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Odometry;
+import org.firstinspires.ftc.teamcode.subsystems.PinPoint;
+import org.firstinspires.ftc.teamcode.commands.IntakeIn;
+import org.firstinspires.ftc.teamcode.commands.RunShooter;
 
 @TeleOp
 public class Teleop extends OpMode{
@@ -29,9 +28,6 @@ public class Teleop extends OpMode{
     boolean endGameWarning = false;
     private GamepadEx driverOp;
 
-
-
-
     @Override
     public void init() {
         driverOp = new GamepadEx(gamepad1);
@@ -39,9 +35,6 @@ public class Teleop extends OpMode{
                 driverOp, GamepadKeys.Button.A
         );
         IntakeIn.whenPressed(new IntakeIn());
-
-
-
 
         telemetry.addData(">", "Initializing hardware.");
         telemetry.update();
@@ -59,8 +52,6 @@ public class Teleop extends OpMode{
 
         driverOp.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new rampDown());
-
-
 
         driverOp.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new rampPollen());
@@ -123,13 +114,9 @@ public class Teleop extends OpMode{
         } else if (driverOp.getButton(GamepadKeys.Button.A)) {
             telemetry.addLine("Ramp up");
 
-        }else {
+        } else {
             telemetry.addLine("Ramp: up");
         }
-
-
-
-
 
         /*GAMEPAD BINDINGS
         driverOp.getGamepadButton(GamepadKeys.Button.X)
@@ -137,8 +124,6 @@ public class Teleop extends OpMode{
 
         driverOp.getGamepadButton(GamepadKeys.Button.Y)
                         .whenPressed(new rampDown());
-
-
 
         driverOp.getGamepadButton(GamepadKeys.Button.B)
                         .whenPressed(new rampPollen());
@@ -155,16 +140,10 @@ public class Teleop extends OpMode{
         Drive.INSTANCE.moveRobot(drive, strafe, turn);
         telemetry.addData("Drive: ","powers: %5.2f / %5.2f / %5.2f",drive,strafe,turn); */
 
-
-
     }
+
     public double squareInput(double input) {
         return Math.copySign(input * input, input);
     }
-
-
-
-
-
 
 }

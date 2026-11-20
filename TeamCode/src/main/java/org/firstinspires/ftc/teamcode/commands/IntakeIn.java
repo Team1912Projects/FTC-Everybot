@@ -1,0 +1,35 @@
+package org.firstinspires.ftc.teamcode.commands;
+
+
+import com.seattlesolvers.solverslib.command.CommandBase;
+
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
+
+public class IntakeIn extends CommandBase {
+    Intake intake;
+
+    public IntakeIn(){
+
+        addRequirements(intake);
+
+    }
+
+    @Override
+    public void initialize() {}
+
+    @Override
+    public void execute() {
+        Intake.INSTANCE.intakeIn();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        Intake.INSTANCE.intakeStowFlower();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+}

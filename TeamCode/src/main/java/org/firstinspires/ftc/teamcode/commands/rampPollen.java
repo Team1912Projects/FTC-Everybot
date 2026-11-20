@@ -1,14 +1,14 @@
-package org.firstinspires.ftc.teamcode.Commands;
+package org.firstinspires.ftc.teamcode.commands;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
-public class rampDown extends CommandBase {
+public class rampPollen extends CommandBase {
 
     Intake intake;
 
-    public rampDown() {
+    public rampPollen() {
 
         addRequirements(intake);
     }
@@ -18,7 +18,7 @@ public class rampDown extends CommandBase {
 
     @Override
     public void execute() {
-        intake.rampDown();
+        intake.rampPollen();
     }
 
     @Override

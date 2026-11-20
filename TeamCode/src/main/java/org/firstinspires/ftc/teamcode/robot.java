@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.Subsystems.DriveFieldCentric;
-
+import org.firstinspires.ftc.teamcode.subsystems.DriveFieldCentric;
 
 import com.seattlesolvers.solverslib.hardware.RevIMU;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
@@ -11,33 +10,15 @@ import com.seattlesolvers.solverslib.hardware.motors.MotorEx;
 import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 import com.seattlesolvers.solverslib.drivebase.MecanumDrive;
 
-
-
-
-
 public class robot {
     public Telemetry telemetry;
     public MecanumDrive drive;
     public MotorEx intakeMotor;
     public MotorEx kickerMotor;
     public MotorEx shooterMotor;
-
-
     public ServoEx rampServoLeft;
     public ServoEx rampServoRight;
-    public DriveFieldCentric driv;
-
-
-
-
-
-
-
-
-
-
-
-
+    public DriveFieldCentric driveFieldCentric;
 
     public robot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -47,8 +28,6 @@ public class robot {
         kickerMotor = new MotorEx(hardwareMap, "kicker");
         rampServoLeft = new ServoEx(hardwareMap, "rampLeft");
         rampServoRight = new ServoEx(hardwareMap,"rampRight");
-
-
 
         Motor fl, fr, bl, br;
         fl = new MotorEx(hardwareMap, "frontLeft");
@@ -60,8 +39,7 @@ public class robot {
         drive = new MecanumDrive(fl, fr, bl, br);
 
         RevIMU imu = new RevIMU(hardwareMap);
-        driv = new DriveFieldCentric(hardwareMap);
+        driveFieldCentric = new DriveFieldCentric(hardwareMap);
         imu.init();
     }
-
 }

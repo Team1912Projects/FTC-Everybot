@@ -1,16 +1,12 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
+package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
-import org.firstinspires.ftc.teamcode.Utils.PIDController;
-import org.firstinspires.ftc.teamcode.Utils.SimpleMotorFeedforward;
+import org.firstinspires.ftc.teamcode.utils.PIDController;
+import org.firstinspires.ftc.teamcode.utils.SimpleMotorFeedforward;
 import org.firstinspires.ftc.teamcode.robot;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DcMotor;
+
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
-
-import org.firstinspires.ftc.teamcode.robot;
 
 public class Shooter extends SubsystemBase {
     robot robot;

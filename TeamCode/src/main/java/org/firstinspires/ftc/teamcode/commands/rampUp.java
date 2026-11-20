@@ -1,17 +1,16 @@
-package org.firstinspires.ftc.teamcode.Commands;
-
+package org.firstinspires.ftc.teamcode.commands;
 
 import com.seattlesolvers.solverslib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 
-public class IntakeIn extends CommandBase {
+public class rampUp extends CommandBase {
+
     Intake intake;
 
-    public IntakeIn(){
+    public rampUp() {
 
         addRequirements(intake);
-
     }
 
     @Override
@@ -19,17 +18,14 @@ public class IntakeIn extends CommandBase {
 
     @Override
     public void execute() {
-        Intake.INSTANCE.intakeIn();
+        intake.rampUp();
     }
 
     @Override
-    public void end(boolean interrupted) {
-        Intake.INSTANCE.intakeStowFlower();
-    }
+    public void end(boolean interrupted) {}
 
     @Override
     public boolean isFinished() {
         return false;
     }
-
 }

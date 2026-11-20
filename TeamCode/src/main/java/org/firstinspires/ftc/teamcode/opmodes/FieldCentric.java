@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Opmodes;
+package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -6,7 +6,6 @@ import com.seattlesolvers.solverslib.command.InstantCommand;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 
-import org.firstinspires.ftc.teamcode.Subsystems.DriveFieldCentric;
 import org.firstinspires.ftc.teamcode.robot;
 
 @TeleOp
@@ -17,10 +16,8 @@ public class FieldCentric extends OpMode {
     @Override
     public void init() {
         robot = new robot(hardwareMap, telemetry);
-
         driverOp = new GamepadEx(gamepad1);
     }
-
 
     @Override
     public void loop() {
@@ -30,18 +27,18 @@ public class FieldCentric extends OpMode {
         double turn = -squareInput(driverOp.getRightX());
         driverOp.getGamepadButton(GamepadKeys.Button.START)
                         .whenPressed(new InstantCommand(
-                                () -> robot.driv.resetHeading()
+                                () -> robot.driveFieldCentric.resetHeading()
                                 ));
 
-        robot.driv.driveFieldCentric(
+        robot.driveFieldCentric.driveFieldCentric(
                 forward,
                 strafe,
                 turn
         );
-
-
     }
+
     public double squareInput(double input) {
         return Math.copySign(input * input, input);
     }
+
 }

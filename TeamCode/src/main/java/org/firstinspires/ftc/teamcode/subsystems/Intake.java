@@ -1,10 +1,7 @@
-package org.firstinspires.ftc.teamcode.Subsystems;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+package org.firstinspires.ftc.teamcode.subsystems;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import org.firstinspires.ftc.teamcode.robot;
-import com.seattlesolvers.solverslib.hardware.servos.ServoEx;
 
 public class Intake extends SubsystemBase {
     robot robot;
