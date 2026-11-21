@@ -3,14 +3,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.utils.PIDController;
 import org.firstinspires.ftc.teamcode.utils.SimpleMotorFeedforward;
-import org.firstinspires.ftc.teamcode.robot;
+import org.firstinspires.ftc.teamcode.Robot;
 
 import com.seattlesolvers.solverslib.command.SubsystemBase;
 import com.seattlesolvers.solverslib.hardware.motors.Motor;
 
 public class Shooter extends SubsystemBase {
-    robot robot;
-    public Shooter(robot robot) {
+    Robot robot;
+    public Shooter(Robot robot) {
         this.robot = robot;
     }
     public Shooter() {}
@@ -59,15 +59,16 @@ public class Shooter extends SubsystemBase {
 
     }
 
-    public void init(HardwareMap hMap){
+    public void init(Robot robot){
 
-        robot.shooterMotor.setInverted(false);
-        robot.shooterMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        robot.shooterMotor.setRunMode(Motor.RunMode.RawPower);
+        this.robot = robot;
+        this.robot.shooterMotor.setInverted(false);
+        this.robot.shooterMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        this.robot.shooterMotor.setRunMode(Motor.RunMode.RawPower);
 
-        robot.kickerMotor.setInverted(false);
-        robot.kickerMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        robot.kickerMotor.setRunMode(Motor.RunMode.RawPower);
+        this.robot.kickerMotor.setInverted(false);
+        this.robot.kickerMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        this.robot.kickerMotor.setRunMode(Motor.RunMode.RawPower);
         setPID();
         setFF();
         stop();

@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.subsystems;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import com.seattlesolvers.solverslib.command.SubsystemBase;
-import org.firstinspires.ftc.teamcode.robot;
+import org.firstinspires.ftc.teamcode.Robot;
 
 public class Intake extends SubsystemBase {
-    robot robot;
-    public Intake(robot robot) {
+    Robot robot;
+    public Intake(Robot robot) {
         this.robot = robot;
     }
     public static final Intake INSTANCE = new Intake();
@@ -62,10 +62,9 @@ public class Intake extends SubsystemBase {
     }
 
 
-    public void init(HardwareMap hMap) {
+    public void init(Robot robot) {
 
-
-
+        this.robot = robot;
         robot.intakeMotor.setInverted(false);
     }
 

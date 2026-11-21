@@ -22,8 +22,8 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
@@ -36,12 +36,15 @@ public class PinPoint {
 
     private PinPoint() { }
 
+    private Robot robot;
     GoBildaPinpointDriver pinpoint;
 
-    public void init(HardwareMap hMap) {
+    public void init(Robot robot) {
         // Get a reference to the sensor
-        pinpoint = hMap.get(GoBildaPinpointDriver.class, "pinpoint");
+        //pinpoint = hMap.get(GoBildaPinpointDriver.class, "pinpoint");
 
+        this.robot = robot;
+        this.pinpoint = robot.pinpointDriver;
         // Configure the sensor
         configurePinpoint();
 

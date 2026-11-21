@@ -3,33 +3,44 @@ package org.firstinspires.ftc.teamcode.opmodes;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import com.seattlesolvers.solverslib.command.Commands;
 import com.seattlesolvers.solverslib.command.button.Button;
 import com.seattlesolvers.solverslib.command.button.GamepadButton;
 import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
 
+import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.rampDown;
 import org.firstinspires.ftc.teamcode.commands.rampUp;
 import org.firstinspires.ftc.teamcode.commands.rampPollen;
 import org.firstinspires.ftc.teamcode.subsystems.Shooter;
-import org.firstinspires.ftc.teamcode.subsystems.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Odometry;
 import org.firstinspires.ftc.teamcode.subsystems.PinPoint;
 import org.firstinspires.ftc.teamcode.commands.IntakeIn;
 import org.firstinspires.ftc.teamcode.commands.RunShooter;
 
+
 @TeleOp
+
 public class Teleop extends OpMode{
 
+    private Robot robot;
     final private ElapsedTime teleopTimer = new ElapsedTime();
     final private ElapsedTime blinkTimer = new ElapsedTime();
     boolean endGameWarning = false;
+    private boolean FIELD_CENTRIC;
     private GamepadEx driverOp;
+
+
+
 
     @Override
     public void init() {
+        robot = new Robot(hardwareMap, telemetry);
+
         driverOp = new GamepadEx(gamepad1);
         Button IntakeIn = new GamepadButton(
                 driverOp, GamepadKeys.Button.A
@@ -38,10 +49,10 @@ public class Teleop extends OpMode{
 
         telemetry.addData(">", "Initializing hardware.");
         telemetry.update();
-        Drive.INSTANCE.init(hardwareMap);
-        Shooter.INSTANCE.init(hardwareMap);
-        Intake.INSTANCE.init(hardwareMap);
-        PinPoint.INSTANCE.init(hardwareMap);
+        //Drive.INSTANCE.init(robot);
+        Shooter.INSTANCE.init(robot);
+        Intake.INSTANCE.init(robot);
+        PinPoint.INSTANCE.init(robot);
         Odometry.INSTANCE.teleinit();
         telemetry.addData(">", "Initialization complete.");
         telemetry.update();
@@ -53,6 +64,8 @@ public class Teleop extends OpMode{
         driverOp.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new rampDown());
 
+
+
         driverOp.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new rampPollen());
 
@@ -62,11 +75,11 @@ public class Teleop extends OpMode{
         driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenActive(new RunShooter());
 
-        double drive = -squareInput(driverOp.getLeftY());
-        double strafe = -squareInput(driverOp.getLeftX());
-        double turn = -squareInput(driverOp.getRightX());
-        Drive.INSTANCE.moveRobot(drive, strafe, turn);
-        telemetry.addData("Drive: ","powers: %5.2f / %5.2f / %5.2f",drive,strafe,turn);
+        // double drive = -squareInput(driverOp.getLeftY());
+        // double strafe = -squareInput(driverOp.getLeftX());
+        // double turn = -squareInput(driverOp.getRightX());
+        //Drive.INSTANCE.moveRobot(drive, strafe, turn);
+        // telemetry.addData("Drive: ","powers: %5.2f / %5.2f / %5.2f",drive,strafe,turn);
 
     }
 
@@ -114,9 +127,33 @@ public class Teleop extends OpMode{
         } else if (driverOp.getButton(GamepadKeys.Button.A)) {
             telemetry.addLine("Ramp up");
 
-        } else {
+        }else {
             telemetry.addLine("Ramp: up");
         }
+
+        if (driverOp.getButton(GamepadKeys.Button.LEFT_BUMPER)) {
+            FIELD_CENTRIC = ! FIELD_CENTRIC;
+        }
+
+        if (!FIELD_CENTRIC) {
+            // optional fourth parameter for squared inputs
+            robot.drive.driveRobotCentric(
+                    driverOp.getLeftX(),
+                    driverOp.getLeftY(),
+                    driverOp.getRightX(),
+                    false
+            );
+        } else {
+            // optional fifth parameter for squared inputs
+            robot.drive.driveFieldCentric(
+                    driverOp.getLeftX(),
+                    driverOp.getLeftY(),
+                    driverOp.getRightX(),
+                    robot.imu.getRotation2d().getDegrees(),   // gyro value passed in here must be in degrees
+                    false
+            );
+        }
+        telemetry.addData("FieldCentric: ",FIELD_CENTRIC);
 
         /*GAMEPAD BINDINGS
         driverOp.getGamepadButton(GamepadKeys.Button.X)
@@ -124,6 +161,8 @@ public class Teleop extends OpMode{
 
         driverOp.getGamepadButton(GamepadKeys.Button.Y)
                         .whenPressed(new rampDown());
+
+
 
         driverOp.getGamepadButton(GamepadKeys.Button.B)
                         .whenPressed(new rampPollen());
@@ -140,10 +179,16 @@ public class Teleop extends OpMode{
         Drive.INSTANCE.moveRobot(drive, strafe, turn);
         telemetry.addData("Drive: ","powers: %5.2f / %5.2f / %5.2f",drive,strafe,turn); */
 
-    }
 
+
+    }
     public double squareInput(double input) {
         return Math.copySign(input * input, input);
     }
+
+
+
+
+
 
 }
