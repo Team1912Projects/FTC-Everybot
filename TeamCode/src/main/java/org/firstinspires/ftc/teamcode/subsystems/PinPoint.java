@@ -62,6 +62,12 @@ public class PinPoint {
                 AngleUnit.RADIANS, pose.getHeading()));
     }
 
+    public void logPose() {
+        Pose2d pose = getPose2d();
+        robot.telemetry.addLine(String.format("pose  %6.1f %6.1f %6.1f",
+                pose.getX(), pose.getY(), pose.getHeadingDegrees() ));
+    }
+
     public void setPose2D(Pose2D pose) {
         pinpoint.setPosition( new Pose2D(DistanceUnit.INCH, pose.getX(DistanceUnit.INCH),
                 pose.getY(DistanceUnit.INCH),

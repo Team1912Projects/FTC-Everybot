@@ -11,6 +11,7 @@ import com.seattlesolvers.solverslib.gamepad.GamepadEx;
 import com.seattlesolvers.solverslib.gamepad.GamepadKeys;
 import com.seattlesolvers.solverslib.command.CommandScheduler;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.commands.rampDown;
 import org.firstinspires.ftc.teamcode.commands.rampUp;
@@ -22,9 +23,7 @@ import org.firstinspires.ftc.teamcode.subsystems.PinPoint;
 import org.firstinspires.ftc.teamcode.commands.IntakeIn;
 import org.firstinspires.ftc.teamcode.commands.RunShooter;
 
-
 @TeleOp
-
 public class Teleop extends OpMode{
 
     private Robot robot;
@@ -33,9 +32,6 @@ public class Teleop extends OpMode{
     boolean endGameWarning = false;
     private boolean FIELD_CENTRIC;
     private GamepadEx driverOp;
-
-
-
 
     @Override
     public void init() {
@@ -63,8 +59,6 @@ public class Teleop extends OpMode{
 
         driverOp.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new rampDown());
-
-
 
         driverOp.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(new rampPollen());
@@ -104,10 +98,9 @@ public class Teleop extends OpMode{
      */
     @Override
     public void loop() {
-        Shooter.INSTANCE.run();
         CommandScheduler.getInstance().run();
-        PinPoint.INSTANCE.getPose();
-       //telemetry.addLine(String.format("pose  %6.1f %6.1f %6.1f", ))
+        Shooter.INSTANCE.setRPM();
+        PinPoint.INSTANCE.logPose();
 
         if (teleopTimer.seconds() >= 80. & teleopTimer.seconds() <= 90.) {
             if (! endGameWarning) {
@@ -149,7 +142,7 @@ public class Teleop extends OpMode{
                     driverOp.getLeftX(),
                     driverOp.getLeftY(),
                     driverOp.getRightX(),
-                    robot.imu.getRotation2d().getDegrees(),   // gyro value passed in here must be in degrees
+                    PinPoint.INSTANCE.getPose2d().getHeadingDegrees(),
                     false
             );
         }
